@@ -31,4 +31,4 @@ def test_multiple_joins():
 
 def test_subquery():
     assert(df_under_20.shape == (15, 5))
-    assert(df_under_20.iloc[0]['firstName'] == 'Loui')
+    assert(df_under_20.iloc[0]['firstName'] == 'Gerard')

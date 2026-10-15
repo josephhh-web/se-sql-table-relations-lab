@@ -12,10 +12,10 @@ pd.read_sql("""SELECT * FROM sqlite_master""", conn)
 # STEP 1
 # Replace None with your code
 df_boston = pd.read_sql("""
-   SELECT e.firstName, e.lastName, e.jobTitle
-   FROM employees e
-   JOIN offices o ON e.officeCode = o.officeCode
-   WHERE o.city = 'Nairobi'
+    SELECT firstName, lastName 
+    FROM employees 
+    JOIN offices ON employees.officeCode = offices.officeCode 
+    WHERE offices.city = 'Boston';
 """, conn)
 
 # STEP 2
@@ -79,12 +79,13 @@ df_product_sold = pd.read_sql("""
 # STEP 8
 # Replace None with your code
 df_total_customers = pd.read_sql("""
-   SELECT COUNT(c.customerNumber) AS n_customers, o.officeCode, o.city
-   FROM offices o
-   JOIN employees e ON o.officeCode = e.officeCode
-   JOIN customers c ON e.employeeNumber = c.salesRepEmployeeNumber
-   GROUP BY o.officeCode; 
-   """, conn)
+    SELECT p.productName, p.productCode, COUNT(DISTINCT o.customerNumber) AS numpurchasers 
+    FROM products p 
+    JOIN orderdetails od ON p.productCode = od.productCode 
+    JOIN orders o ON od.orderNumber = o.orderNumber 
+    GROUP BY p.productCode, p.productName 
+    ORDER BY numpurchasers DESC;
+""", conn)
 
 # STEP 9
 # Replace None with your code
@@ -114,5 +115,4 @@ df_under_20 = pd.read_sql("""
         HAVING COUNT(DISTINCT o2.customerNumber) < 20
     );
 """, conn)
-
 conn.close()
