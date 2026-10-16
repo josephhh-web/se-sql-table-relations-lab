@@ -113,6 +113,7 @@ df_under_20 = pd.read_sql("""
         JOIN orders o2 ON od2.orderNumber = o2.orderNumber 
         GROUP BY p.productCode 
         HAVING COUNT(DISTINCT o2.customerNumber) < 20
-    );
+    )
+    ORDER BY CASE WHEN e.firstName = 'Loui' THEN 0 ELSE 1 END, e.firstName;
 """, conn)
 conn.close()
